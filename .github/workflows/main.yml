@@ -1,0 +1,42 @@
+name: Calculator 
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build my project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout public repo
+        uses: actions/checkout@v2
+        with:
+          repository: dayosoh/Activity-CI
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11 # Replace 'x' with your desired Python version (e.g., 3.6, 3.7, 3.8, etc.)
+
+      - name: Install dependencies
+        run: |
+          pip install pytest pytest-mock
+
+      - name: Prepare and extract source code
+        run: |
+          # Additional steps to prepare and extract the source code go here
+          # For example, you can copy the necessary files into the container
+          # or clone additional repositories.
+
+      - name: Run pytest
+        run: pytest test_calculator.py
+
+      - name: Create Release Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: source-code
+          path: dayosoh/Activity-CICD  # Replace with the path to your source code folder
